@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void tileClicked(View view) {
 
-        int row;
-        int column;
+        int row = 0;
+        int column = 0;
 
         // get id of clicked tile
         int id = view.getId();
@@ -39,17 +39,35 @@ public class MainActivity extends AppCompatActivity {
 
         switch(state) {
             case CROSS:
+                // TODO update UI
                 break;
             case CIRCLE:
+                // TODO update UI
                 break;
             case INVALID:
                 break;
         }
+
+        // check if game is won and update UI
+        GameState won = game.won();
+
+        if (won == GameState.DRAW) {
+            // TODO show message Draw
+        }
+        else if (won == GameState.PLAYER_ONE) {
+            // TODO show message player one wins
+        }
+        else if (won == GameState.PLAYER_TWO) {
+            // TODO show message player two wins
+        }
     }
 
-    public resetClicked() {
+    public void resetClicked() {
 
         // TODO reset UI
+        for (int i = 0; i < tiles.length; i++) {
+            // TODO clear tiles
+        }
 
         game = new Game();
     }
