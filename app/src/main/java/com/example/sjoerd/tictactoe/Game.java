@@ -23,7 +23,6 @@ public class Game {
         movesPlayed = 0;
     }
 
-    // TODO write choose function
     public TileState choose(int row, int column) {
         if (board[row][column] == TileState.BLANK) {
             if (playerOneTurn) {
@@ -55,10 +54,9 @@ public class Game {
     }
 
     public GameState won() {
-        // TODO implement won function
 
         // check if player one has won
-        if (playerOneTurn) {
+        if (!playerOneTurn) {
 
             // check if three same signs are on rows or columns
             for (int i = 0; i < BOARD_SIZE; i++) {
@@ -80,7 +78,7 @@ public class Game {
         }
 
         // check if player two has won
-        else if (!playerOneTurn) {
+        else if (playerOneTurn) {
             // check if three same signs are on rows or columns
             for (int i = 0; i < BOARD_SIZE; i++) {
                 if (board[i][0] == TileState.CIRCLE && board[i][1] == TileState.CIRCLE && board[i][2] == TileState.CIRCLE) {

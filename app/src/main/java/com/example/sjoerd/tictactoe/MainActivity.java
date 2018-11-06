@@ -3,6 +3,7 @@ package com.example.sjoerd.tictactoe;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         // get id of clicked tile
         int id = view.getId();
 
+        // get button from ID
+        Button button = findViewById(id);
+
         // find row and column of button
         for(int i = 0; i < tiles.length; i ++) {
             if (tiles[i] == id) {
@@ -39,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch(state) {
             case CROSS:
-                // TODO update UI
+                button.setText("X");
                 break;
             case CIRCLE:
-                // TODO update UI
+                button.setText("O");
                 break;
             case INVALID:
                 break;
@@ -52,23 +56,29 @@ public class MainActivity extends AppCompatActivity {
         GameState won = game.won();
 
         if (won == GameState.DRAW) {
-            // TODO show message Draw
+            Button resetButton = findViewById(R.id.resetbutton);
+            resetButton.setText("DRAW");
         }
         else if (won == GameState.PLAYER_ONE) {
-            // TODO show message player one wins
+            Button resetButton = findViewById(R.id.resetbutton);
+            resetButton.setText("P1 WON");
         }
         else if (won == GameState.PLAYER_TWO) {
-            // TODO show message player two wins
+            Button resetButton = findViewById(R.id.resetbutton);
+            resetButton.setText("P2 WON");
         }
     }
 
-    public void resetClicked() {
+    public void resetClicked(View view) {
 
-        // TODO reset UI
+        // reset UI
+        Button resetButton = findViewById(R.id.resetbutton);
+        resetButton.setText("restart");
+
         for (int i = 0; i < tiles.length; i++) {
-            // TODO clear tiles
+            Button button = findViewById(tiles[i]);
+            button.setText("");
+             // TODO change TileState to BLANK
         }
-
-        game = new Game();
     }
 }
