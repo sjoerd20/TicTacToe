@@ -102,5 +102,5 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:onClick="resetClicked"
-        android:text="Restart" />
+        android:text="Restart"/>
 </LinearLayout>

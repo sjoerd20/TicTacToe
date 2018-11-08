@@ -1,6 +1,8 @@
 package com.example.sjoerd.tictactoe;
 
-public class Game {
+import java.io.Serializable;
+
+public class Game implements Serializable{
 
     final private int BOARD_SIZE = 3;
     private TileState[][] board;
@@ -23,7 +25,26 @@ public class Game {
         movesPlayed = 0;
     }
 
+    public void setBlank() {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                board[i][j] = TileState.BLANK;
+            }
+        }
+    }
+
+    public TileState[][] getBoard() {
+        return board;
+    }
+
+    public int getBoardSize() {
+        return  BOARD_SIZE;
+    }
+
     public TileState choose(int row, int column) {
+        if (gameOver) {
+            return TileState.INVALID;
+        }
         if (board[row][column] == TileState.BLANK) {
             if (playerOneTurn) {
 
@@ -61,18 +82,22 @@ public class Game {
             // check if three same signs are on rows or columns
             for (int i = 0; i < BOARD_SIZE; i++) {
                 if (board[i][0] == TileState.CROSS && board[i][1] == TileState.CROSS && board[i][2] == TileState.CROSS) {
+                    gameOver = true;
                     return GameState.PLAYER_ONE;
                 }
                 if (board[0][i] == TileState.CROSS && board[1][i] == TileState.CROSS && board[2][i] == TileState.CROSS) {
+                    gameOver = true;
                     return GameState.PLAYER_ONE;
                 }
             }
 
             // check diagonal
             if (board[0][0] == TileState.CROSS && board[1][1] == TileState.CROSS && board[2][2] == TileState.CROSS) {
+                gameOver = true;
                 return GameState.PLAYER_ONE;
             }
             if (board[0][2] == TileState.CROSS && board[1][1] == TileState.CROSS && board[2][0] == TileState.CROSS) {
+                gameOver = true;
                 return GameState.PLAYER_ONE;
             }
         }
@@ -82,18 +107,22 @@ public class Game {
             // check if three same signs are on rows or columns
             for (int i = 0; i < BOARD_SIZE; i++) {
                 if (board[i][0] == TileState.CIRCLE && board[i][1] == TileState.CIRCLE && board[i][2] == TileState.CIRCLE) {
+                    gameOver = true;
                     return GameState.PLAYER_TWO;
                 }
                 if (board[0][i] == TileState.CIRCLE && board[1][i] == TileState.CIRCLE && board[2][i] == TileState.CIRCLE) {
+                    gameOver = true;
                     return GameState.PLAYER_TWO;
                 }
             }
 
             // check diagonal
             if (board[0][0] == TileState.CIRCLE && board[1][1] == TileState.CIRCLE && board[2][2] == TileState.CIRCLE) {
+                gameOver = true;
                 return GameState.PLAYER_TWO;
             }
             if (board[0][2] == TileState.CIRCLE && board[1][1] == TileState.CIRCLE && board[2][0] == TileState.CIRCLE) {
+                gameOver = true;
                 return GameState.PLAYER_TWO;
             }
         }

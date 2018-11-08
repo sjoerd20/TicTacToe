@@ -16,8 +16,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // create game
-        game = new Game();
+        // Check for rotations and restore board
+        if(savedInstanceState!=null)
+        {
+            game = (Game) savedInstanceState.getSerializable("game");
+            TileState[][] board = game.getBoard();
+            restoreTiles(board);
+        }
+
+        // else create new game
+        else
+            game = new Game();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("game", game);
+    }
+
+    public void restoreTiles(TileState[][] board) {
+        for (int i = 0; i < game.getBoardSize(); i++) {
+            for (int j = 0; j < game.getBoardSize(); j++) {
+
+                // find button by using i + j*3
+                Button button = findViewById(tiles[i + j*3]);
+
+                // set tile text according to save
+                switch(board[i][j]) {
+                    case CROSS:
+                        button.setText("X");
+                        break;
+                    case CIRCLE:
+                        button.setText("O");
+                        break;
+                    case BLANK:
+                        button.setText("");
+                }
+            }
+        }
     }
 
     public void tileClicked(View view) {
@@ -78,7 +115,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < tiles.length; i++) {
             Button button = findViewById(tiles[i]);
             button.setText("");
-             // TODO change TileState to BLANK
+            game.setBlank();
+
+            game = new Game();
         }
     }
 }
