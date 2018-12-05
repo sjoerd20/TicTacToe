@@ -4,9 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Toast toastMessage;
     Game game;
     int[] tiles = {R.id.tile00, R.id.tile01, R.id.tile02, R.id.tile10, R.id.tile11, R.id.tile12,
                    R.id.tile20, R.id.tile21, R.id.tile22};
@@ -93,25 +95,31 @@ public class MainActivity extends AppCompatActivity {
         GameState won = game.won();
 
         if (won == GameState.DRAW) {
-            Button resetButton = findViewById(R.id.resetbutton);
-            resetButton.setText("DRAW");
+            placeToast("Draw!");
         }
         else if (won == GameState.PLAYER_ONE) {
-            Button resetButton = findViewById(R.id.resetbutton);
-            resetButton.setText("P1 WON");
+            placeToast("Player 1 won!");
         }
         else if (won == GameState.PLAYER_TWO) {
-            Button resetButton = findViewById(R.id.resetbutton);
-            resetButton.setText("P2 WON");
+            placeToast("Player 2 won!");
         }
+    }
+
+    // places a toast with a message
+    private void placeToast(String message) {
+        toastMessage = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        toastMessage.show();
     }
 
     public void resetClicked(View view) {
 
-        // reset UI
-        Button resetButton = findViewById(R.id.resetbutton);
-        resetButton.setText("restart");
+        // remove toast
+        if (toastMessage != null) {
+            toastMessage.cancel();
+            toastMessage = null;
+        }
 
+        // reset UI to blank
         for (int i = 0; i < tiles.length; i++) {
             Button button = findViewById(tiles[i]);
             button.setText("");
